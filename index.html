@@ -915,8 +915,16 @@ header{position:sticky;top:0;background:rgba(246,248,252,.96);backdrop-filter:bl
 
   </div>
 </div>
-<p class='note'>Classificação prática e subjetiva: geral, gratuito, inteligência, facilidade e suporte a português. Algumas ferramentas são freemium: gratuitas, mas com limites.</p><p class='note'>Versão 6.3: favoritos inteligentes — fechados quando vazios, abertos quando tiveres favoritos.</p></main><button class='float' id='dark'>🌙 Modo</button><script>
-const q=document.getElementById('q'), cat=document.getElementById('cat'), stars=document.getElementById('stars');
+<p class='note'>Classificação prática e subjetiva: geral, gratuito, inteligência, facilidade e suporte a português. Algumas ferramentas são freemium: gratuitas, mas com limites.</p><p class='note'><span id="appVersion"></span></p></main><button class='float' id='dark'>🌙 Modo</button><script>document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('appVersion').textContent =
+    'Versão ' + APP_CONFIG.version;
+});
+
+const q=document.getElementById('q')
+const q=document.getElementById('q'), cat=document.getElementById('cat'), stars=document.getElementById('stars'); document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('appVersion').textContent =
+    'Versão ' + APP_CONFIG.version;
+});
 const chips=[...document.querySelectorAll('.chip')]; let cards=[...document.querySelectorAll('.card')]; let sections=[...document.querySelectorAll('.section')];
 let active='Todas';
 function apply(){ const query=q.value.toLowerCase().trim(); const min=+stars.value; active=cat.value==='Todas'?active:cat.value; cards.forEach(c=>{ const okText=!query||c.dataset.text.includes(query); const okCat=active==='Todas'||c.dataset.cat===active; const okStars=+c.dataset.stars>=min; c.style.display=(okText&&okCat&&okStars)?'block':'none'; }); sections.forEach(s=>{ const visible=[...s.querySelectorAll('.card')].some(c=>c.style.display!=='none'); s.style.display=visible?'block':'none'; }); chips.forEach(ch=>ch.classList.toggle('active',ch.dataset.cat===active)); }
