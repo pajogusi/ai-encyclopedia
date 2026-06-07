@@ -1,0 +1,1318 @@
+<!doctype html><html lang='pt'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Enciclopédia de IAs</title>
+<style>
+:root{--bg:#f6f8fc;--card:#fff;--text:#111827;--muted:#667085;--blue:#2563eb;--dark:#0f172a;--line:#e5e7eb;--gold:#f59e0b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--text)}
+header{position:sticky;top:0;background:rgba(246,248,252,.96);backdrop-filter:blur(8px);z-index:5;padding:18px 14px;border-bottom:1px solid var(--line)}
+.wrap{max-width:1100px;margin:0 auto}h1{font-size:28px;margin:0 0 6px}.sub{color:var(--muted);margin:0 0 14px}.controls{display:grid;grid-template-columns:1fr 240px 150px;gap:10px}input,select{width:100%;border:1px solid var(--line);border-radius:18px;padding:15px;font-size:16px;background:#fff}.chips{display:flex;gap:10px;overflow:auto;padding:12px 0 0}.chip{white-space:nowrap;border:1px solid var(--line);background:#fff;border-radius:999px;padding:11px 18px;font-size:15px}.chip.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.hero{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:18px 0}.panel{background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:0 8px 24px rgba(15,23,42,.06)}.panel h2{margin:0 0 12px;background:var(--dark);color:#fff;padding:14px 18px;border-radius:16px}.toplist{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.topitem,.use{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fafafa;display:flex;flex-direction:column;gap:4px}.topitem span{color:var(--gold)}.advisor select{margin-bottom:10px}.result{border:1px solid var(--line);border-radius:16px;background:#fafafa;padding:12px;margin-top:10px;display:grid;gap:10px}.pick{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff}.pick b{display:block;font-size:18px;margin-bottom:4px}.pick small{display:block;color:var(--muted);margin-bottom:8px}.pick a{display:inline-block;background:var(--blue);color:#fff;text-decoration:none;border-radius:12px;padding:9px 12px;font-weight:700}.why{color:#475467;font-size:14px}.topitem small,.use span{color:var(--muted)}.uses{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.section{margin:22px 0}.section>h2{background:var(--dark);color:#fff;border-radius:18px;padding:17px 22px;font-size:26px;margin:0 0 16px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:0 8px 22px rgba(15,23,42,.06)}.top{display:flex;align-items:center;gap:10px;justify-content:space-between}h3{font-size:22px;margin:0}.badge{background:#eef2ff;color:#3730a3;padding:6px 10px;border-radius:999px;font-size:13px}.desc{font-size:16px;color:#4b5563;line-height:1.45;min-height:68px}.rating{display:flex;align-items:center;gap:10px;margin:8px 0}.stars{font-size:23px;color:var(--gold);letter-spacing:1px}.mini{display:grid;grid-template-columns:1fr;gap:5px;font-size:14px;color:#475467;background:#f9fafb;border-radius:14px;padding:10px}.meta{color:var(--muted);margin:12px 0}.btn{display:block;text-align:center;background:var(--blue);color:#fff;text-decoration:none;font-weight:800;border-radius:15px;padding:14px;font-size:18px}.note{color:#667085;font-size:13px;margin:22px 0}
+.dark{--bg:#0b1120;--card:#111827;--text:#f9fafb;--muted:#cbd5e1;--line:#334155}.dark input,.dark select,.dark .chip,.dark .panel,.dark .topitem,.dark .use,.dark .result,.dark .pick{background:#111827;color:#fff}.dark .desc,.dark .meta{color:#cbd5e1}
+.float{position:fixed;right:14px;bottom:14px;border:0;background:#111827;color:#fff;border-radius:999px;padding:13px 16px;font-weight:700}
+
+.favbtn{width:100%;margin:10px 0;border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px;font-weight:800;font-size:16px;color:var(--text)}
+.dark .favbtn{background:#111827;color:#fff}.favbtn.on{background:#fee2e2;border-color:#fecaca;color:#991b1b}
+.toolbox{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:18px 0}.toolbox .panel{min-height:220px}.medals{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.medal,.teamitem,.cmpcell{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fafafa}.dark .medal,.dark .teamitem,.dark .cmpcell{background:#111827}.teamgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.teamitem b{display:block}.teamitem small{color:var(--muted)}.comparegrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:10px}.cmpcell h3{margin-bottom:8px}.favlist{display:grid;gap:8px}.favitem{display:flex;justify-content:space-between;gap:10px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:10px;background:#fafafa}.dark .favitem{background:#111827}.favitem a{background:var(--blue);color:#fff;text-decoration:none;border-radius:10px;padding:7px 10px;font-weight:700}.tiny{font-size:13px;color:var(--muted)}
+@media(max-width:850px){.toolbox{grid-template-columns:1fr}.medals,.teamgrid,.comparegrid{grid-template-columns:1fr}}
+
+
+.addgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.addgrid textarea{grid-column:1/-1;min-height:90px}.managebar{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}textarea{width:100%;border:1px solid var(--line);border-radius:18px;padding:15px;font-size:16px;background:#fff;color:var(--text);font-family:inherit}.dark textarea{background:#111827;color:#fff}.smallbtn{border:1px solid var(--line);background:#fff;border-radius:14px;padding:10px 13px;font-weight:800;color:var(--text)}.dark .smallbtn{background:#111827;color:#fff}.wallet{display:inline-block;background:#fff7ed;color:#9a3412;border:1px solid #fed7aa;border-radius:999px;padding:7px 10px;font-size:13px;font-weight:800;margin:6px 0}.dark .wallet{background:#431407;color:#fed7aa;border-color:#9a3412}.custom-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.danger{background:#fee2e2!important;color:#991b1b!important;border-color:#fecaca!important}.okmsg{color:#166534;background:#dcfce7;border:1px solid #bbf7d0;border-radius:14px;padding:10px;margin-top:10px;font-weight:700}.dark .okmsg{background:#052e16;color:#bbf7d0;border-color:#166534}
+@media(max-width:850px){.addgrid{grid-template-columns:1fr}.custom-actions{grid-template-columns:1fr}}
+
+@media(max-width:850px){.controls{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.toplist,.uses{grid-template-columns:1fr}h1{font-size:24px}.section>h2{font-size:22px}.desc{min-height:auto}}
+
+/* Post-it tooltips para classificações */
+.mini span{
+  position:relative;
+  cursor:help;
+}
+.mini span::after{
+  content:attr(data-tip);
+  position:absolute;
+  left:0;
+  bottom:135%;
+  min-width:210px;
+  max-width:260px;
+  background:#fff8c5;
+  color:#111827;
+  border:1px solid #facc15;
+  border-radius:12px;
+  padding:10px 12px;
+  font-size:13px;
+  line-height:1.35;
+  box-shadow:0 8px 22px rgba(15,23,42,.18);
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(6px);
+  transition:.18s ease;
+  z-index:30;
+  white-space:normal;
+}
+.mini span::before{
+  content:"";
+  position:absolute;
+  left:18px;
+  bottom:118%;
+  border:8px solid transparent;
+  border-top-color:#facc15;
+  opacity:0;
+  transition:.18s ease;
+  z-index:31;
+}
+.mini span:hover::after,
+.mini span:focus::after,
+.mini span:active::after,
+.mini span:hover::before,
+.mini span:focus::before,
+.mini span:active::before{
+  opacity:1;
+  transform:translateY(0);
+}
+.dark .mini span::after{
+  background:#1f2937;
+  color:#f9fafb;
+  border-color:#f59e0b;
+}
+@media(max-width:850px){
+  .mini span::after{
+    left:-6px;
+    bottom:130%;
+    min-width:190px;
+    max-width:230px;
+    font-size:12px;
+  }
+}
+
+
+/* ===== v6.1 Accordion corrigido ===== */
+.v6-actions{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+.v6-actions button{border:1px solid var(--line);background:#fff;color:var(--text);border-radius:999px;padding:11px 16px;font-weight:800;cursor:pointer}
+.dark .v6-actions button{background:#111827;color:#fff}
+.acc{margin:16px 0;border:1px solid var(--line);border-radius:22px;overflow:hidden;background:var(--card);box-shadow:0 8px 24px rgba(15,23,42,.05)}
+.acc-head{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;border:0;background:var(--dark);color:#fff;padding:17px 22px;font-size:22px;font-weight:900;text-align:left;cursor:pointer}
+.acc-head .arrow{font-size:20px;transition:.18s ease}
+.acc.open .acc-head .arrow{transform:rotate(90deg)}
+.acc-body{display:none;padding:16px;background:var(--card)}
+.acc.open>.acc-body{display:block}
+.acc-body>.panel{margin:0}
+.acc-body>.section{margin:0}
+.acc-body>.section>h2{display:none}
+.acc-body>.hero{margin:0}
+@media(max-width:850px){
+ .acc-head{font-size:19px;padding:15px 18px}
+ .v6-actions{position:sticky;top:0;z-index:4;background:var(--bg);padding:8px 0}
+}
+
+
+/* v6.2 navegação por chips */
+.acc.jump-highlight{
+  outline:3px solid var(--blue);
+  box-shadow:0 0 0 6px rgba(37,99,235,.15);
+}
+
+
+/* v6.3 favoritos inteligentes */
+.acc.fav-empty .acc-head{opacity:.92}
+
+
+/* v6.4 adicionar nova IA */
+.add-form-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+.add-form-grid .full{grid-column:1/-1}
+.add-form-grid textarea{
+  width:100%;
+  min-height:90px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:15px;
+  font-size:16px;
+  background:#fff;
+  font-family:inherit;
+}
+.dark .add-form-grid textarea{background:#111827;color:#fff}
+.add-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.add-actions button{
+  border:0;
+  background:var(--blue);
+  color:#fff;
+  border-radius:14px;
+  padding:12px 16px;
+  font-weight:900;
+  cursor:pointer;
+}
+.add-actions button.secondary{
+  background:#fff;
+  color:var(--text);
+  border:1px solid var(--line);
+}
+.dark .add-actions button.secondary{background:#111827;color:#fff}
+.custom-tag{background:#dcfce7;color:#166534}
+.delete-custom{
+  width:100%;
+  margin:10px 0;
+  border:1px solid #fecaca;
+  background:#fee2e2;
+  color:#991b1b;
+  border-radius:14px;
+  padding:11px;
+  font-weight:900;
+  cursor:pointer;
+}
+@media(max-width:850px){.add-form-grid{grid-template-columns:1fr}}
+
+</style></head><body><header><div class='wrap'><h1>Enciclopédia de IAs</h1><p class='sub'>Links, descrição e classificação prática de 0 a 5 estrelas.</p><div class='controls'><input id='q' placeholder='Pesquisar: texto, imagem, música, código, tradução...'><select id='cat'><option value='Todas'>Ordenar por categoria</option><option value='Assistentes Gerais / Chatbots'>Assistentes Gerais / Chatbots</option><option value='Pesquisa e Conhecimento'>Pesquisa e Conhecimento</option><option value='Geração de Imagens'>Geração de Imagens</option><option value='Design e Criatividade'>Design e Criatividade</option><option value='Áudio e Música'>Áudio e Música</option><option value='Vídeo'>Vídeo</option><option value='Escrita e Texto'>Escrita e Texto</option><option value='Programação e Código'>Programação e Código</option><option value='Educação'>Educação</option><option value='Produtividade e Negócios'>Produtividade e Negócios</option><option value='Tradução'>Tradução</option><option value='Saúde e Bem-estar'>Saúde e Bem-estar</option><option value='Apresentações'>Apresentações</option></select><select id='stars'><option value='0'>Todas as estrelas</option><option value='5'>5 estrelas</option><option value='4'>4+ estrelas</option><option value='3'>3+ estrelas</option></select></div><div class='chips'><button class='chip active' data-cat='Todas'>Todas</button><button class='chip' data-cat='Assistentes Gerais / Chatbots'>Assistentes Gerais / Chatbots</button><button class='chip' data-cat='Pesquisa e Conhecimento'>Pesquisa e Conhecimento</button><button class='chip' data-cat='Geração de Imagens'>Geração de Imagens</button><button class='chip' data-cat='Design e Criatividade'>Design e Criatividade</button><button class='chip' data-cat='Áudio e Música'>Áudio e Música</button><button class='chip' data-cat='Vídeo'>Vídeo</button><button class='chip' data-cat='Escrita e Texto'>Escrita e Texto</button><button class='chip' data-cat='Programação e Código'>Programação e Código</button><button class='chip' data-cat='Educação'>Educação</button><button class='chip' data-cat='Produtividade e Negócios'>Produtividade e Negócios</button><button class='chip' data-cat='Tradução'>Tradução</button><button class='chip' data-cat='Saúde e Bem-estar'>Saúde e Bem-estar</button><button class='chip' data-cat='Apresentações'>Apresentações</button></div></div></header><main class='wrap'><div class='v6-actions'><button onclick='v6ExpandAll()'>📂 Expandir tudo</button><button onclick='v6CollapseAll()'>📁 Recolher tudo</button></div>
+<div class="acc">
+  <button class="acc-head" onclick="v6Toggle(this)"><span>➕ Adicionar nova IA</span><span class="arrow">▶</span></button>
+  <div class="acc-body">
+    <div class="panel">
+      <h2>➕ Adicionar nova IA</h2>
+      <div class="add-form-grid">
+        <input id="newName" placeholder="Nome da IA">
+        <select id="newCat">
+          <option value="Assistentes Gerais / Chatbots">Assistentes Gerais / Chatbots</option>
+          <option value="Pesquisa e Conhecimento">Pesquisa e Conhecimento</option>
+          <option value="Geração de Imagens">Geração de Imagens</option>
+          <option value="Design e Criatividade">Design e Criatividade</option>
+          <option value="Áudio e Música">Áudio e Música</option>
+          <option value="Vídeo">Vídeo</option>
+          <option value="Escrita e Texto">Escrita e Texto</option>
+          <option value="Programação e Código">Programação e Código</option>
+          <option value="Educação">Educação</option>
+          <option value="Produtividade e Negócios">Produtividade e Negócios</option>
+          <option value="Tradução">Tradução</option>
+          <option value="Saúde e Bem-estar">Saúde e Bem-estar</option>
+          <option value="Apresentações">Apresentações</option>
+        </select>
+        <input id="newLink" class="full" placeholder="Link: https://...">
+        <textarea id="newDesc" class="full" placeholder="Descrição curta: o que esta IA faz?"></textarea>
+        <select id="newStars">
+          <option value="5">★★★★★ 5/5</option>
+          <option value="4">★★★★☆ 4/5</option>
+          <option value="3">★★★☆☆ 3/5</option>
+          <option value="2">★★☆☆☆ 2/5</option>
+          <option value="1">★☆☆☆☆ 1/5</option>
+          <option value="0">☆☆☆☆☆ 0/5</option>
+        </select>
+        <select id="newMoney">
+          <option value="5">💰 ★★★★★ — muito generoso</option>
+          <option value="4">💰 ★★★★☆ — bom grátis</option>
+          <option value="3">💰 ★★★☆☆ — grátis mas pouco</option>
+          <option value="2">💰 ★★☆☆☆ — vais acabar por pagar</option>
+          <option value="1">💰 ★☆☆☆☆ — carteira a chorar</option>
+        </select>
+        <select id="newBrain">
+          <option value="5">🧠 ★★★★★</option>
+          <option value="4">🧠 ★★★★☆</option>
+          <option value="3">🧠 ★★★☆☆</option>
+          <option value="2">🧠 ★★☆☆☆</option>
+          <option value="1">🧠 ★☆☆☆☆</option>
+        </select>
+        <select id="newEase">
+          <option value="5">🚀 ★★★★★</option>
+          <option value="4">🚀 ★★★★☆</option>
+          <option value="3">🚀 ★★★☆☆</option>
+          <option value="2">🚀 ★★☆☆☆</option>
+          <option value="1">🚀 ★☆☆☆☆</option>
+        </select>
+        <select id="newPT">
+          <option value="5">🇵🇹 ★★★★★</option>
+          <option value="4">🇵🇹 ★★★★☆</option>
+          <option value="3">🇵🇹 ★★★☆☆</option>
+          <option value="2">🇵🇹 ★★☆☆☆</option>
+          <option value="1">🇵🇹 ★☆☆☆☆</option>
+        </select>
+        <textarea id="newNote" class="full" placeholder="Nota do Pàjó: Grátis mas pouco 🤣, Canivete suíço, etc."></textarea>
+      </div>
+      <div class="add-actions">
+        <button onclick="addCustomAI()">Guardar IA</button>
+        <button class="secondary" onclick="clearCustomAIForm()">Limpar</button>
+        <button class="secondary" onclick="exportCustomAIs()">Exportar novas IAs</button>
+        <button class="secondary" onclick="document.getElementById('importCustomFile').click()">Importar novas IAs</button>
+        <input id="importCustomFile" type="file" accept="application/json" style="display:none" onchange="importCustomAIs(event)">
+      </div>
+      <p class="tiny">As IAs adicionadas ficam guardadas neste browser/dispositivo.</p>
+    </div>
+  </div>
+</div>
+
+
+<div class="acc">
+  <button class="acc-head" onclick="v6Toggle(this)"><span>📝 Legenda das classificações</span><span class="arrow">▶</span></button>
+  <div class="acc-body">
+<div class='panel' style='margin:18px 0'>
+  <h2>📝 Legenda das classificações</h2>
+  <div class='uses'>
+    <div class='use'><span>💰 Preço / grátis</span><b>5★ = generoso · 1★ = grátis mas pouco</b></div>
+    <div class='use'><span>🧠 Inteligência</span><b>Raciocínio, análise, escrita e qualidade das respostas</b></div>
+    <div class='use'><span>🚀 Facilidade</span><b>Rápida, simples e prática no dia a dia</b></div>
+    <div class='use'><span>🇵🇹 Português</span><b>Boa compreensão e escrita em português</b></div>
+  </div>
+</div>
+
+<div class="acc open">
+  <button class="acc-head" onclick="v6Toggle(this)"><span>🏆 Top / 🎯 Melhor IA / 🧭 Qual IA devo usar?</span><span class="arrow">▶</span></button>
+  <div class="acc-body">
+<div class='hero'><div class='panel'><h2>🏆 Top IAs</h2><div class='toplist'><div class='topitem'><b>1. ChatGPT</b><span>★★★★★ 5/5</span><small>Assistentes Gerais / Chatbots</small></div><div class='topitem'><b>2. ElevenLabs</b><span>★★★★★ 5/5</span><small>Áudio e Música</small></div><div class='topitem'><b>3. DeepL</b><span>★★★★★ 5/5</span><small>Tradução</small></div><div class='topitem'><b>4. NotebookLM</b><span>★★★★★ 5/5</span><small>Pesquisa e Conhecimento</small></div><div class='topitem'><b>5. Claude</b><span>★★★★★ 5/5</span><small>Assistentes Gerais / Chatbots</small></div><div class='topitem'><b>6. Suno AI</b><span>★★★★★ 5/5</span><small>Áudio e Música</small></div><div class='topitem'><b>7. GitHub Copilot</b><span>★★★★★ 5/5</span><small>Programação e Código</small></div><div class='topitem'><b>8. Leonardo.ai</b><span>★★★★★ 5/5</span><small>Geração de Imagens</small></div><div class='topitem'><b>9. Ideogram</b><span>★★★★★ 5/5</span><small>Geração de Imagens</small></div><div class='topitem'><b>10. Udio</b><span>★★★★★ 5/5</span><small>Áudio e Música</small></div><div class='topitem'><b>11. Runway ML</b><span>★★★★★ 5/5</span><small>Vídeo</small></div><div class='topitem'><b>12. Luma Dream Machine</b><span>★★★★★ 5/5</span><small>Vídeo</small></div></div>
+  </div>
+</div>
+</div><div class='panel'><h2>🎯 Melhor IA para...</h2><div class='uses'><div class='use'><span>Conversar e aprender</span><b>ChatGPT</b></div><div class='use'><span>Raciocínio longo</span><b>Claude</b></div><div class='use'><span>Pesquisa com fontes</span><b>Perplexity AI</b></div><div class='use'><span>Trabalhar com documentos</span><b>NotebookLM</b></div><div class='use'><span>Google / Android</span><b>Gemini</b></div><div class='use'><span>Programação completa</span><b>Cursor / Bolt.new</b></div><div class='use'><span>Criar imagens</span><b>Leonardo.ai / Krea AI</b></div><div class='use'><span>Texto dentro de imagens</span><b>Ideogram</b></div><div class='use'><span>Música</span><b>Suno AI / Udio</b></div><div class='use'><span>Voz e narração</span><b>ElevenLabs</b></div><div class='use'><span>Tradução PT-EN</span><b>DeepL</b></div><div class='use'><span>Apresentações</span><b>Gamma</b></div><div class='use'><span>Vídeo</span><b>Runway ML / Luma</b></div><div class='use'><span>Design rápido</span><b>Canva AI</b></div><div class='use'><span>Estudo académico</span><b>Elicit / Consensus / SciSpace</b></div></div></div><div class='panel advisor'><h2>🧭 Qual IA devo usar?</h2><select id='task'><option value='geral'>Escolhe uma tarefa...</option><option value='traducao-care'>Traduzir PT → EN para Care Home</option><option value='apresentacao'>Criar apresentação</option><option value='estudar'>Estudar / explicar matéria</option><option value='pesquisa'>Pesquisar com fontes</option><option value='documentos'>Analisar documentos/PDFs</option><option value='programar'>Criar apps ou código</option><option value='imagem'>Criar imagens</option><option value='video'>Criar vídeo</option><option value='musica'>Criar música</option><option value='voz'>Criar voz/narração</option><option value='design'>Design rápido</option><option value='reuniao'>Transcrever reuniões</option></select><div id='advice' class='result'></div></div>
+</div>
+  </div>
+</div>
+
+<div class="acc">
+  <button class="acc-head" onclick="v6Toggle(this)"><span>🧩 Ferramentas rápidas: medalhas, equipa e comparador</span><span class="arrow">▶</span></button>
+  <div class="acc-body">
+<div class='toolbox'>
+  <div class='panel'><h2>🏅 Medalhas</h2><div class='medals'>
+    <div class='medal'>🥇 <b>Melhor geral</b><br><span class='tiny'>ChatGPT</span></div>
+    <div class='medal'>🧠 <b>Melhor raciocínio</b><br><span class='tiny'>Claude</span></div>
+    <div class='medal'>🔎 <b>Melhor pesquisa</b><br><span class='tiny'>Perplexity AI</span></div>
+    <div class='medal'>🇵🇹 <b>Melhor PT → EN</b><br><span class='tiny'>DeepL + ChatGPT</span></div>
+    <div class='medal'>💎 <b>Melhor grátis</b><br><span class='tiny'>Gemini / Copilot</span></div>
+    <div class='medal'>🚀 <b>Mais prático</b><br><span class='tiny'>Canva AI</span></div>
+  </div></div>
+  <div class='panel'><h2>🧩 Monta a minha equipa</h2><select id='team'><option value='care'>Senior Carer</option><option value='study'>Estudante / trabalhos</option><option value='code'>Programador</option><option value='content'>Criador de conteúdo</option><option value='personal'>Uso pessoal diário</option></select><div id='teamout' class='teamgrid'></div></div>
+  <div class='panel'><h2>⚖️ Comparador</h2><select id='cmp1'></select><select id='cmp2'></select><div id='cmpout' class='comparegrid'></div></div>
+</div>
+
+  </div>
+</div>
+
+<div class="acc">
+  <button class="acc-head" onclick="v6Toggle(this)"><span>❤️ Os meus favoritos</span><span class="arrow">▶</span></button>
+  <div class="acc-body">
+<div class='panel' style='margin:18px 0'><h2>❤️ Os meus favoritos</h2><div id='favout' class='favlist'></div><p class='tiny'>Os favoritos ficam guardados neste browser/dispositivo.</p></div>
+
+  </div>
+</div>
+
+<div class="acc">
+  <button class="acc-head" onclick="v6Toggle(this)"><span>Assistentes Gerais / Chatbots</span><span class="arrow">▶</span></button>
+  <div class="acc-body">
+<section class='section' data-section='Assistentes Gerais / Chatbots'><h2>Assistentes Gerais / Chatbots</h2><div class='grid'><article class='card' data-name='chatgpt' data-cat='Assistentes Gerais / Chatbots' data-stars='5' data-text='chatgpt assistentes gerais / chatbots assistente geral para escrita, estudo, código, ideias, análise de imagens e produtividade.'>
+<div class='top'><h3>ChatGPT</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Assistente geral para escrita, estudo, código, ideias, análise de imagens e produtividade.</p>
+<div class='rating'><span class='stars'>★★★★★</span><b>5/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★★</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★★</span></div>
+<div class='meta'>Categoria: Assistentes Gerais / Chatbots</div>
+<a class='btn' href='https://chat.openai.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='claude' data-cat='Assistentes Gerais / Chatbots' data-stars='5' data-text='claude assistentes gerais / chatbots muito forte em raciocínio, escrita longa, análise de documentos e conversa natural.'>
+<div class='top'><h3>Claude</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Muito forte em raciocínio, escrita longa, análise de documentos e conversa natural.</p>
+<div class='rating'><span class='stars'>★★★★★</span><b>5/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★★</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Assistentes Gerais / Chatbots</div>
+<a class='btn' href='https://claude.ai' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='gemini' data-cat='Assistentes Gerais / Chatbots' data-stars='4' data-text='gemini assistentes gerais / chatbots ia da google, boa para pesquisa, android, gmail, docs e integração google.'>
+<div class='top'><h3>Gemini</h3><span class='badge'>PDF</span></div>
+<p class='desc'>IA da Google, boa para pesquisa, Android, Gmail, Docs e integração Google.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★★</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★★</span></div>
+<div class='meta'>Categoria: Assistentes Gerais / Chatbots</div>
+<a class='btn' href='https://gemini.google.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='microsoft copilot' data-cat='Assistentes Gerais / Chatbots' data-stars='4' data-text='microsoft copilot assistentes gerais / chatbots bom para windows, office, pesquisa web e tarefas rápidas do dia a dia.'>
+<div class='top'><h3>Microsoft Copilot</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Bom para Windows, Office, pesquisa web e tarefas rápidas do dia a dia.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★★</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★★</span></div>
+<div class='meta'>Categoria: Assistentes Gerais / Chatbots</div>
+<a class='btn' href='https://copilot.microsoft.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='meta ai' data-cat='Assistentes Gerais / Chatbots' data-stars='4' data-text='meta ai assistentes gerais / chatbots assistente da meta baseado em modelos llama, útil para conversa e redes meta.'>
+<div class='top'><h3>Meta AI</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Assistente da Meta baseado em modelos Llama, útil para conversa e redes Meta.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★★</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Assistentes Gerais / Chatbots</div>
+<a class='btn' href='https://www.meta.ai' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='le chat mistral' data-cat='Assistentes Gerais / Chatbots' data-stars='4' data-text='le chat mistral assistentes gerais / chatbots assistente europeu rápido, com bons modelos e uso simples.'>
+<div class='top'><h3>Le Chat Mistral</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Assistente europeu rápido, com bons modelos e uso simples.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★★</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Assistentes Gerais / Chatbots</div>
+<a class='btn' href='https://chat.mistral.ai' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='poe' data-cat='Assistentes Gerais / Chatbots' data-stars='4' data-text='poe assistentes gerais / chatbots permite testar vários modelos de ia no mesmo sítio.'>
+<div class='top'><h3>Poe</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Permite testar vários modelos de IA no mesmo sítio.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Assistentes Gerais / Chatbots</div>
+<a class='btn' href='https://poe.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article></div></section>
+  </div>
+</div>
+
+<div class="acc">
+  <button class="acc-head" onclick="v6Toggle(this)"><span>Pesquisa e Conhecimento</span><span class="arrow">▶</span></button>
+  <div class="acc-body">
+<section class='section' data-section='Pesquisa e Conhecimento'><h2>Pesquisa e Conhecimento</h2><div class='grid'><article class='card' data-name='perplexity ai' data-cat='Pesquisa e Conhecimento' data-stars='5' data-text='perplexity ai pesquisa e conhecimento excelente para pesquisar com fontes, respostas citadas e comparação rápida.'>
+<div class='top'><h3>Perplexity AI</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Excelente para pesquisar com fontes, respostas citadas e comparação rápida.</p>
+<div class='rating'><span class='stars'>★★★★★</span><b>5/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★★</span></div>
+<div class='meta'>Categoria: Pesquisa e Conhecimento</div>
+<a class='btn' href='https://www.perplexity.ai' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='you.com' data-cat='Pesquisa e Conhecimento' data-stars='4' data-text='you.com pesquisa e conhecimento motor de busca com ia integrada para pesquisa, escrita e produtividade.'>
+<div class='top'><h3>You.com</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Motor de busca com IA integrada para pesquisa, escrita e produtividade.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Pesquisa e Conhecimento</div>
+<a class='btn' href='https://you.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='elicit' data-cat='Pesquisa e Conhecimento' data-stars='5' data-text='elicit pesquisa e conhecimento pesquisa académica assistida por ia.'>
+<div class='top'><h3>Elicit</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Pesquisa académica assistida por IA.</p>
+<div class='rating'><span class='stars'>★★★★★</span><b>5/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★★</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Pesquisa e Conhecimento</div>
+<a class='btn' href='https://elicit.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='consensus' data-cat='Pesquisa e Conhecimento' data-stars='5' data-text='consensus pesquisa e conhecimento responde com base em estudos científicos e papers.'>
+<div class='top'><h3>Consensus</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Responde com base em estudos científicos e papers.</p>
+<div class='rating'><span class='stars'>★★★★★</span><b>5/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★★</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Pesquisa e Conhecimento</div>
+<a class='btn' href='https://consensus.app' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='semantic scholar' data-cat='Pesquisa e Conhecimento' data-stars='4' data-text='semantic scholar pesquisa e conhecimento busca inteligente de artigos científicos.'>
+<div class='top'><h3>Semantic Scholar</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Busca inteligente de artigos científicos.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★★</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Pesquisa e Conhecimento</div>
+<a class='btn' href='https://www.semanticscholar.org' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='scispace' data-cat='Pesquisa e Conhecimento' data-stars='5' data-text='scispace pesquisa e conhecimento ajuda a ler, explicar e resumir papers científicos.'>
+<div class='top'><h3>SciSpace</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Ajuda a ler, explicar e resumir papers científicos.</p>
+<div class='rating'><span class='stars'>★★★★★</span><b>5/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★★</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Pesquisa e Conhecimento</div>
+<a class='btn' href='https://typeset.io' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='researchrabbit' data-cat='Pesquisa e Conhecimento' data-stars='4' data-text='researchrabbit pesquisa e conhecimento mapeia literatura académica e relações entre estudos.'>
+<div class='top'><h3>ResearchRabbit</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Mapeia literatura académica e relações entre estudos.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★★</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Pesquisa e Conhecimento</div>
+<a class='btn' href='https://www.researchrabbit.ai' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='explainpaper' data-cat='Pesquisa e Conhecimento' data-stars='4' data-text='explainpaper pesquisa e conhecimento explica artigos complexos em linguagem simples.'>
+<div class='top'><h3>Explainpaper</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Explica artigos complexos em linguagem simples.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Pesquisa e Conhecimento</div>
+<a class='btn' href='https://www.explainpaper.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='notebooklm' data-cat='Pesquisa e Conhecimento' data-stars='5' data-text='notebooklm pesquisa e conhecimento analisa documentos, cria resumos, perguntas e guias de estudo a partir das tuas fontes.'>
+<div class='top'><h3>NotebookLM</h3><span class='badge'>Extra</span></div>
+<p class='desc'>Analisa documentos, cria resumos, perguntas e guias de estudo a partir das tuas fontes.</p>
+<div class='rating'><span class='stars'>★★★★★</span><b>5/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★★</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★★</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★★</span></div>
+<div class='meta'>Categoria: Pesquisa e Conhecimento</div>
+<a class='btn' href='https://notebooklm.google.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article></div></section>
+  </div>
+</div>
+
+<div class="acc">
+  <button class="acc-head" onclick="v6Toggle(this)"><span>Geração de Imagens</span><span class="arrow">▶</span></button>
+  <div class="acc-body">
+<section class='section' data-section='Geração de Imagens'><h2>Geração de Imagens</h2><div class='grid'><article class='card' data-name='adobe firefly' data-cat='Geração de Imagens' data-stars='4' data-text='adobe firefly geração de imagens criação de imagens com ia, bom para uso criativo e comercial com créditos gratuitos.'>
+<div class='top'><h3>Adobe Firefly</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Criação de imagens com IA, bom para uso criativo e comercial com créditos gratuitos.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★☆☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Geração de Imagens</div>
+<a class='btn' href='https://firefly.adobe.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='bing image creator' data-cat='Geração de Imagens' data-stars='4' data-text='bing image creator geração de imagens geração de imagens baseada em dall·e, simples e gratuita com conta microsoft.'>
+<div class='top'><h3>Bing Image Creator</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Geração de imagens baseada em DALL·E, simples e gratuita com conta Microsoft.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★★</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Geração de Imagens</div>
+<a class='btn' href='https://www.bing.com/images/create' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='leonardo.ai' data-cat='Geração de Imagens' data-stars='5' data-text='leonardo.ai geração de imagens muito bom para imagens de alta qualidade, estilos artísticos e assets visuais.'>
+<div class='top'><h3>Leonardo.ai</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Muito bom para imagens de alta qualidade, estilos artísticos e assets visuais.</p>
+<div class='rating'><span class='stars'>★★★★★</span><b>5/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★★</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Geração de Imagens</div>
+<a class='btn' href='https://leonardo.ai' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='ideogram' data-cat='Geração de Imagens' data-stars='5' data-text='ideogram geração de imagens excelente quando precisas de texto dentro de imagens, logos e posters.'>
+<div class='top'><h3>Ideogram</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Excelente quando precisas de texto dentro de imagens, logos e posters.</p>
+<div class='rating'><span class='stars'>★★★★★</span><b>5/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★★</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Geração de Imagens</div>
+<a class='btn' href='https://ideogram.ai' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='playground ai' data-cat='Geração de Imagens' data-stars='4' data-text='playground ai geração de imagens ferramenta visual para criar e editar imagens com plano gratuito.'>
+<div class='top'><h3>Playground AI</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Ferramenta visual para criar e editar imagens com plano gratuito.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Geração de Imagens</div>
+<a class='btn' href='https://playground.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='nightcafe' data-cat='Geração de Imagens' data-stars='4' data-text='nightcafe geração de imagens geração de arte com créditos diários e comunidade ativa.'>
+<div class='top'><h3>NightCafe</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Geração de arte com créditos diários e comunidade ativa.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★☆☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Geração de Imagens</div>
+<a class='btn' href='https://nightcafe.studio' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='seaart' data-cat='Geração de Imagens' data-stars='4' data-text='seaart geração de imagens forte em anime, personagens e arte digital.'>
+<div class='top'><h3>SeaArt</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Forte em anime, personagens e arte digital.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Geração de Imagens</div>
+<a class='btn' href='https://www.seaart.ai' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='tensor.art' data-cat='Geração de Imagens' data-stars='4' data-text='tensor.art geração de imagens modelos especializados para imagem, anime e estilos variados.'>
+<div class='top'><h3>Tensor.art</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Modelos especializados para imagem, anime e estilos variados.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★☆☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Geração de Imagens</div>
+<a class='btn' href='https://tensor.art' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='krea ai' data-cat='Geração de Imagens' data-stars='5' data-text='krea ai geração de imagens geração e melhoria de imagens com controlo visual em tempo real.'>
+<div class='top'><h3>Krea AI</h3><span class='badge'>Extra</span></div>
+<p class='desc'>Geração e melhoria de imagens com controlo visual em tempo real.</p>
+<div class='rating'><span class='stars'>★★★★★</span><b>5/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★★</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Geração de Imagens</div>
+<a class='btn' href='https://www.krea.ai' target='_blank' rel='noopener'>Abrir IA</a>
+</article></div></section>
+  </div>
+</div>
+
+<div class="acc">
+  <button class="acc-head" onclick="v6Toggle(this)"><span>Design e Criatividade</span><span class="arrow">▶</span></button>
+  <div class="acc-body">
+<section class='section' data-section='Design e Criatividade'><h2>Design e Criatividade</h2><div class='grid'><article class='card' data-name='canva ai' data-cat='Design e Criatividade' data-stars='4' data-text='canva ai design e criatividade design gráfico simples com ferramentas ia para imagens, apresentações e redes sociais.'>
+<div class='top'><h3>Canva AI</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Design gráfico simples com ferramentas IA para imagens, apresentações e redes sociais.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★★</span></div>
+<div class='meta'>Categoria: Design e Criatividade</div>
+<a class='btn' href='https://www.canva.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='uizard' data-cat='Design e Criatividade' data-stars='4' data-text='uizard design e criatividade prototipagem de interfaces e apps com ia.'>
+<div class='top'><h3>Uizard</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Prototipagem de interfaces e apps com IA.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★☆☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Design e Criatividade</div>
+<a class='btn' href='https://uizard.io' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='remove.bg' data-cat='Design e Criatividade' data-stars='5' data-text='remove.bg design e criatividade remove fundos de imagens automaticamente.'>
+<div class='top'><h3>Remove.bg</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Remove fundos de imagens automaticamente.</p>
+<div class='rating'><span class='stars'>★★★★★</span><b>5/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★☆☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★★</span></div>
+<div class='meta'>Categoria: Design e Criatividade</div>
+<a class='btn' href='https://www.remove.bg' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='upscayl' data-cat='Design e Criatividade' data-stars='4' data-text='upscayl design e criatividade aumenta resolução de imagens gratuitamente.'>
+<div class='top'><h3>Upscayl</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Aumenta resolução de imagens gratuitamente.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★★</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★☆☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Design e Criatividade</div>
+<a class='btn' href='https://upscayl.org' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='cleanup.pictures' data-cat='Design e Criatividade' data-stars='4' data-text='cleanup.pictures design e criatividade remove objetos indesejados de imagens.'>
+<div class='top'><h3>Cleanup.pictures</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Remove objetos indesejados de imagens.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Design e Criatividade</div>
+<a class='btn' href='https://cleanup.pictures' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='looka' data-cat='Design e Criatividade' data-stars='4' data-text='looka design e criatividade criação de logos e identidade visual com ia.'>
+<div class='top'><h3>Looka</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Criação de logos e identidade visual com IA.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★☆☆☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Design e Criatividade</div>
+<a class='btn' href='https://looka.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='napkin ai' data-cat='Design e Criatividade' data-stars='4' data-text='napkin ai design e criatividade transforma texto em diagramas e esquemas visuais.'>
+<div class='top'><h3>Napkin AI</h3><span class='badge'>Extra</span></div>
+<p class='desc'>Transforma texto em diagramas e esquemas visuais.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Design e Criatividade</div>
+<a class='btn' href='https://www.napkin.ai' target='_blank' rel='noopener'>Abrir IA</a>
+</article></div></section>
+  </div>
+</div>
+
+<div class="acc">
+  <button class="acc-head" onclick="v6Toggle(this)"><span>Áudio e Música</span><span class="arrow">▶</span></button>
+  <div class="acc-body">
+<section class='section' data-section='Áudio e Música'><h2>Áudio e Música</h2><div class='grid'><article class='card' data-name='suno ai' data-cat='Áudio e Música' data-stars='5' data-text='suno ai áudio e música geração de músicas completas com letra, voz e instrumental.'>
+<div class='top'><h3>Suno AI</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Geração de músicas completas com letra, voz e instrumental.</p>
+<div class='rating'><span class='stars'>★★★★★</span><b>5/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★★</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Áudio e Música</div>
+<a class='btn' href='https://suno.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='udio' data-cat='Áudio e Música' data-stars='5' data-text='udio áudio e música criação musical com letras personalizadas e boa qualidade sonora.'>
+<div class='top'><h3>Udio</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Criação musical com letras personalizadas e boa qualidade sonora.</p>
+<div class='rating'><span class='stars'>★★★★★</span><b>5/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★★</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Áudio e Música</div>
+<a class='btn' href='https://www.udio.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='elevenlabs' data-cat='Áudio e Música' data-stars='5' data-text='elevenlabs áudio e música uma das melhores opções para voz sintética, narração e clonagem de voz.'>
+<div class='top'><h3>ElevenLabs</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Uma das melhores opções para voz sintética, narração e clonagem de voz.</p>
+<div class='rating'><span class='stars'>★★★★★</span><b>5/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★☆☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★★</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★★</span></div>
+<div class='meta'>Categoria: Áudio e Música</div>
+<a class='btn' href='https://elevenlabs.io' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='adobe podcast' data-cat='Áudio e Música' data-stars='4' data-text='adobe podcast áudio e música melhora qualidade de áudio, reduz ruído e limpa gravações.'>
+<div class='top'><h3>Adobe Podcast</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Melhora qualidade de áudio, reduz ruído e limpa gravações.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Áudio e Música</div>
+<a class='btn' href='https://podcast.adobe.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='vocal remover' data-cat='Áudio e Música' data-stars='4' data-text='vocal remover áudio e música separa voz e instrumental de músicas de forma simples.'>
+<div class='top'><h3>Vocal Remover</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Separa voz e instrumental de músicas de forma simples.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★★</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★☆☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Áudio e Música</div>
+<a class='btn' href='https://vocalremover.org' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='mubert' data-cat='Áudio e Música' data-stars='4' data-text='mubert áudio e música cria trilhas sonoras e música ambiente com ia.'>
+<div class='top'><h3>Mubert</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Cria trilhas sonoras e música ambiente com IA.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★☆☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Áudio e Música</div>
+<a class='btn' href='https://mubert.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='ttsmaker' data-cat='Áudio e Música' data-stars='4' data-text='ttsmaker áudio e música texto para voz gratuito e multilingue.'>
+<div class='top'><h3>TTSMaker</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Texto para voz gratuito e multilingue.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★★</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★☆☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★★</span></div>
+<div class='meta'>Categoria: Áudio e Música</div>
+<a class='btn' href='https://ttsmaker.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='descript' data-cat='Áudio e Música' data-stars='4' data-text='descript áudio e música edição de áudio e vídeo baseada em texto, útil para podcasts.'>
+<div class='top'><h3>Descript</h3><span class='badge'>Extra</span></div>
+<p class='desc'>Edição de áudio e vídeo baseada em texto, útil para podcasts.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★☆☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Áudio e Música</div>
+<a class='btn' href='https://www.descript.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article></div></section>
+  </div>
+</div>
+
+<div class="acc">
+  <button class="acc-head" onclick="v6Toggle(this)"><span>Vídeo</span><span class="arrow">▶</span></button>
+  <div class="acc-body">
+<section class='section' data-section='Vídeo'><h2>Vídeo</h2><div class='grid'><article class='card' data-name='runway ml' data-cat='Vídeo' data-stars='5' data-text='runway ml vídeo geração e edição de vídeo com ia, forte para criadores.'>
+<div class='top'><h3>Runway ML</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Geração e edição de vídeo com IA, forte para criadores.</p>
+<div class='rating'><span class='stars'>★★★★★</span><b>5/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★☆☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★★</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Vídeo</div>
+<a class='btn' href='https://runwayml.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='pika' data-cat='Vídeo' data-stars='4' data-text='pika vídeo criação de vídeos curtos, animações e clips a partir de texto/imagem.'>
+<div class='top'><h3>Pika</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Criação de vídeos curtos, animações e clips a partir de texto/imagem.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Vídeo</div>
+<a class='btn' href='https://pika.art' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='luma dream machine' data-cat='Vídeo' data-stars='5' data-text='luma dream machine vídeo geração de vídeo realista a partir de texto e imagem.'>
+<div class='top'><h3>Luma Dream Machine</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Geração de vídeo realista a partir de texto e imagem.</p>
+<div class='rating'><span class='stars'>★★★★★</span><b>5/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★☆☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★★</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Vídeo</div>
+<a class='btn' href='https://lumalabs.ai/dream-machine' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='capcut' data-cat='Vídeo' data-stars='5' data-text='capcut vídeo editor de vídeo completo com ferramentas ia, muito fácil de usar.'>
+<div class='top'><h3>CapCut</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Editor de vídeo completo com ferramentas IA, muito fácil de usar.</p>
+<div class='rating'><span class='stars'>★★★★★</span><b>5/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★★</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★★</span></div>
+<div class='meta'>Categoria: Vídeo</div>
+<a class='btn' href='https://www.capcut.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='fliki' data-cat='Vídeo' data-stars='4' data-text='fliki vídeo transforma texto em vídeo com narração ia.'>
+<div class='top'><h3>Fliki</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Transforma texto em vídeo com narração IA.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★☆☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Vídeo</div>
+<a class='btn' href='https://fliki.ai' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='invideo ai' data-cat='Vídeo' data-stars='4' data-text='invideo ai vídeo criação automatizada de vídeos para marketing, youtube e redes sociais.'>
+<div class='top'><h3>Invideo AI</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Criação automatizada de vídeos para marketing, YouTube e redes sociais.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★☆☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Vídeo</div>
+<a class='btn' href='https://invideo.io' target='_blank' rel='noopener'>Abrir IA</a>
+</article></div></section>
+  </div>
+</div>
+
+<div class="acc">
+  <button class="acc-head" onclick="v6Toggle(this)"><span>Escrita e Texto</span><span class="arrow">▶</span></button>
+  <div class="acc-body">
+<section class='section' data-section='Escrita e Texto'><h2>Escrita e Texto</h2><div class='grid'><article class='card' data-name='rytr' data-cat='Escrita e Texto' data-stars='4' data-text='rytr escrita e texto geração de textos, copywriting e ideias para conteúdos.'>
+<div class='top'><h3>Rytr</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Geração de textos, copywriting e ideias para conteúdos.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★☆☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Escrita e Texto</div>
+<a class='btn' href='https://rytr.me' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='quillbot' data-cat='Escrita e Texto' data-stars='4' data-text='quillbot escrita e texto paráfrase, reescrita e melhoria de frases.'>
+<div class='top'><h3>Quillbot</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Paráfrase, reescrita e melhoria de frases.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Escrita e Texto</div>
+<a class='btn' href='https://quillbot.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='grammarly' data-cat='Escrita e Texto' data-stars='4' data-text='grammarly escrita e texto correção gramatical e estilo, sobretudo em inglês.'>
+<div class='top'><h3>Grammarly</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Correção gramatical e estilo, sobretudo em inglês.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★☆☆☆</span></div>
+<div class='meta'>Categoria: Escrita e Texto</div>
+<a class='btn' href='https://www.grammarly.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='languagetool' data-cat='Escrita e Texto' data-stars='4' data-text='languagetool escrita e texto corretor ortográfico multilingue, útil para português e inglês.'>
+<div class='top'><h3>LanguageTool</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Corretor ortográfico multilingue, útil para português e inglês.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★★</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★☆☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★★</span></div>
+<div class='meta'>Categoria: Escrita e Texto</div>
+<a class='btn' href='https://languagetool.org' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='hemingway app' data-cat='Escrita e Texto' data-stars='4' data-text='hemingway app escrita e texto analisa clareza e legibilidade de textos em inglês.'>
+<div class='top'><h3>Hemingway App</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Analisa clareza e legibilidade de textos em inglês.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★☆☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★☆☆☆</span></div>
+<div class='meta'>Categoria: Escrita e Texto</div>
+<a class='btn' href='https://hemingwayapp.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='writesonic' data-cat='Escrita e Texto' data-stars='4' data-text='writesonic escrita e texto conteúdo de marketing, anúncios e textos comerciais.'>
+<div class='top'><h3>Writesonic</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Conteúdo de marketing, anúncios e textos comerciais.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★☆☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Escrita e Texto</div>
+<a class='btn' href='https://writesonic.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article></div></section>
+  </div>
+</div>
+
+<div class="acc">
+  <button class="acc-head" onclick="v6Toggle(this)"><span>Programação e Código</span><span class="arrow">▶</span></button>
+  <div class="acc-body">
+<section class='section' data-section='Programação e Código'><h2>Programação e Código</h2><div class='grid'><article class='card' data-name='github copilot' data-cat='Programação e Código' data-stars='5' data-text='github copilot programação e código autocomplete e assistência de código dentro de editores.'>
+<div class='top'><h3>GitHub Copilot</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Autocomplete e assistência de código dentro de editores.</p>
+<div class='rating'><span class='stars'>★★★★★</span><b>5/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★☆☆☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★★</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Programação e Código</div>
+<a class='btn' href='https://github.com/features/copilot' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='codeium' data-cat='Programação e Código' data-stars='4' data-text='codeium programação e código assistente de código gratuito, bom para sugestões e produtividade.'>
+<div class='top'><h3>Codeium</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Assistente de código gratuito, bom para sugestões e produtividade.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★★</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Programação e Código</div>
+<a class='btn' href='https://codeium.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='tabnine' data-cat='Programação e Código' data-stars='4' data-text='tabnine programação e código assistente de código com plano gratuito.'>
+<div class='top'><h3>Tabnine</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Assistente de código com plano gratuito.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★☆☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Programação e Código</div>
+<a class='btn' href='https://www.tabnine.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='blackbox ai' data-cat='Programação e Código' data-stars='4' data-text='blackbox ai programação e código pesquisa, explicação e geração de código.'>
+<div class='top'><h3>Blackbox AI</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Pesquisa, explicação e geração de código.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Programação e Código</div>
+<a class='btn' href='https://www.blackbox.ai' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='amazon codewhisperer' data-cat='Programação e Código' data-stars='4' data-text='amazon codewhisperer programação e código assistente de código da amazon, útil no ecossistema aws.'>
+<div class='top'><h3>Amazon CodeWhisperer</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Assistente de código da Amazon, útil no ecossistema AWS.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Programação e Código</div>
+<a class='btn' href='https://aws.amazon.com/codewhisperer' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='cursor' data-cat='Programação e Código' data-stars='5' data-text='cursor programação e código editor de código com ia integrado, excelente para criar apps e scripts.'>
+<div class='top'><h3>Cursor</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Editor de código com IA integrado, excelente para criar apps e scripts.</p>
+<div class='rating'><span class='stars'>★★★★★</span><b>5/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★★</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Programação e Código</div>
+<a class='btn' href='https://cursor.sh' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='replit ai' data-cat='Programação e Código' data-stars='4' data-text='replit ai programação e código programação diretamente no browser com ajuda de ia.'>
+<div class='top'><h3>Replit AI</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Programação diretamente no browser com ajuda de IA.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Programação e Código</div>
+<a class='btn' href='https://replit.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='phind' data-cat='Programação e Código' data-stars='4' data-text='phind programação e código pesquisa técnica e programação com respostas focadas em developers.'>
+<div class='top'><h3>Phind</h3><span class='badge'>Extra</span></div>
+<p class='desc'>Pesquisa técnica e programação com respostas focadas em developers.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Programação e Código</div>
+<a class='btn' href='https://www.phind.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='bolt.new' data-cat='Programação e Código' data-stars='5' data-text='bolt.new programação e código criação rápida de apps web no browser com ia.'>
+<div class='top'><h3>Bolt.new</h3><span class='badge'>Extra</span></div>
+<p class='desc'>Criação rápida de apps web no browser com IA.</p>
+<div class='rating'><span class='stars'>★★★★★</span><b>5/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★★</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Programação e Código</div>
+<a class='btn' href='https://bolt.new' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='v0 by vercel' data-cat='Programação e Código' data-stars='5' data-text='v0 by vercel programação e código criação de interfaces e componentes web com ia.'>
+<div class='top'><h3>v0 by Vercel</h3><span class='badge'>Extra</span></div>
+<p class='desc'>Criação de interfaces e componentes web com IA.</p>
+<div class='rating'><span class='stars'>★★★★★</span><b>5/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★☆☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★★</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Programação e Código</div>
+<a class='btn' href='https://v0.dev' target='_blank' rel='noopener'>Abrir IA</a>
+</article></div></section>
+  </div>
+</div>
+
+<div class="acc">
+  <button class="acc-head" onclick="v6Toggle(this)"><span>Educação</span><span class="arrow">▶</span></button>
+  <div class="acc-body">
+<section class='section' data-section='Educação'><h2>Educação</h2><div class='grid'><article class='card' data-name='khanmigo' data-cat='Educação' data-stars='4' data-text='khanmigo educação tutor ia da khan academy para estudantes.'>
+<div class='top'><h3>Khanmigo</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Tutor IA da Khan Academy para estudantes.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★☆☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Educação</div>
+<a class='btn' href='https://www.khanacademy.org/khan-labs' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='duolingo' data-cat='Educação' data-stars='4' data-text='duolingo educação aprendizagem de idiomas com apoio de ia.'>
+<div class='top'><h3>Duolingo</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Aprendizagem de idiomas com apoio de IA.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★★</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★☆☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★★</span></div>
+<div class='meta'>Categoria: Educação</div>
+<a class='btn' href='https://www.duolingo.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='photomath' data-cat='Educação' data-stars='4' data-text='photomath educação resolve problemas matemáticos por fotografia.'>
+<div class='top'><h3>Photomath</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Resolve problemas matemáticos por fotografia.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★☆☆</span></div>
+<div class='meta'>Categoria: Educação</div>
+<a class='btn' href='https://photomath.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='wolfram alpha' data-cat='Educação' data-stars='5' data-text='wolfram alpha educação matemática, computação e respostas técnicas avançadas.'>
+<div class='top'><h3>Wolfram Alpha</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Matemática, computação e respostas técnicas avançadas.</p>
+<div class='rating'><span class='stars'>★★★★★</span><b>5/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★★</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★☆☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★☆☆</span></div>
+<div class='meta'>Categoria: Educação</div>
+<a class='btn' href='https://www.wolframalpha.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='socratic' data-cat='Educação' data-stars='4' data-text='socratic educação ajuda com perguntas escolares e explicações.'>
+<div class='top'><h3>Socratic</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Ajuda com perguntas escolares e explicações.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★★</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★☆☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Educação</div>
+<a class='btn' href='https://socratic.org' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='quizlet' data-cat='Educação' data-stars='4' data-text='quizlet educação flashcards, estudo e revisão com ia.'>
+<div class='top'><h3>Quizlet</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Flashcards, estudo e revisão com IA.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★☆☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Educação</div>
+<a class='btn' href='https://quizlet.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article></div></section>
+  </div>
+</div>
+
+<div class="acc">
+  <button class="acc-head" onclick="v6Toggle(this)"><span>Produtividade e Negócios</span><span class="arrow">▶</span></button>
+  <div class="acc-body">
+<section class='section' data-section='Produtividade e Negócios'><h2>Produtividade e Negócios</h2><div class='grid'><article class='card' data-name='notion ai' data-cat='Produtividade e Negócios' data-stars='4' data-text='notion ai produtividade e negócios notas, tarefas, bases de dados e produtividade com ia.'>
+<div class='top'><h3>Notion AI</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Notas, tarefas, bases de dados e produtividade com IA.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★☆☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Produtividade e Negócios</div>
+<a class='btn' href='https://www.notion.so' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='otter.ai' data-cat='Produtividade e Negócios' data-stars='4' data-text='otter.ai produtividade e negócios transcrição automática de reuniões.'>
+<div class='top'><h3>Otter.ai</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Transcrição automática de reuniões.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★☆☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★☆☆</span></div>
+<div class='meta'>Categoria: Produtividade e Negócios</div>
+<a class='btn' href='https://otter.ai' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='fireflies.ai' data-cat='Produtividade e Negócios' data-stars='4' data-text='fireflies.ai produtividade e negócios notas e resumos automáticos de reuniões.'>
+<div class='top'><h3>Fireflies.ai</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Notas e resumos automáticos de reuniões.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★☆☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★☆☆</span></div>
+<div class='meta'>Categoria: Produtividade e Negócios</div>
+<a class='btn' href='https://fireflies.ai' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='gamma' data-cat='Produtividade e Negócios' data-stars='5' data-text='gamma produtividade e negócios criação rápida de apresentações e documentos visuais com ia.'>
+<div class='top'><h3>Gamma</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Criação rápida de apresentações e documentos visuais com IA.</p>
+<div class='rating'><span class='stars'>★★★★★</span><b>5/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Produtividade e Negócios</div>
+<a class='btn' href='https://gamma.app' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='tome' data-cat='Produtividade e Negócios' data-stars='4' data-text='tome produtividade e negócios apresentações e documentos narrativos com ia.'>
+<div class='top'><h3>Tome</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Apresentações e documentos narrativos com IA.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★☆☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Produtividade e Negócios</div>
+<a class='btn' href='https://tome.app' target='_blank' rel='noopener'>Abrir IA</a>
+</article></div></section>
+  </div>
+</div>
+
+<div class="acc">
+  <button class="acc-head" onclick="v6Toggle(this)"><span>Tradução</span><span class="arrow">▶</span></button>
+  <div class="acc-body">
+<section class='section' data-section='Tradução'><h2>Tradução</h2><div class='grid'><article class='card' data-name='deepl' data-cat='Tradução' data-stars='5' data-text='deepl tradução tradução de alta qualidade, muito forte entre português e inglês.'>
+<div class='top'><h3>DeepL</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Tradução de alta qualidade, muito forte entre português e inglês.</p>
+<div class='rating'><span class='stars'>★★★★★</span><b>5/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★★</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★★</span></div>
+<div class='meta'>Categoria: Tradução</div>
+<a class='btn' href='https://www.deepl.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='google translate' data-cat='Tradução' data-stars='4' data-text='google translate tradução tradução gratuita, rápida e multilingue.'>
+<div class='top'><h3>Google Translate</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Tradução gratuita, rápida e multilingue.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★★</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★★</span></div>
+<div class='meta'>Categoria: Tradução</div>
+<a class='btn' href='https://translate.google.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='reverso' data-cat='Tradução' data-stars='4' data-text='reverso tradução tradução com exemplos reais e contexto.'>
+<div class='top'><h3>Reverso</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Tradução com exemplos reais e contexto.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★★</span></div>
+<div class='meta'>Categoria: Tradução</div>
+<a class='btn' href='https://www.reverso.net' target='_blank' rel='noopener'>Abrir IA</a>
+</article></div></section>
+  </div>
+</div>
+
+<div class="acc">
+  <button class="acc-head" onclick="v6Toggle(this)"><span>Saúde e Bem-estar</span><span class="arrow">▶</span></button>
+  <div class="acc-body">
+<section class='section' data-section='Saúde e Bem-estar'><h2>Saúde e Bem-estar</h2><div class='grid'><article class='card' data-name='ada health' data-cat='Saúde e Bem-estar' data-stars='4' data-text='ada health saúde e bem-estar triagem de sintomas com ia. não substitui médico.'>
+<div class='top'><h3>Ada Health</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Triagem de sintomas com IA. Não substitui médico.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Saúde e Bem-estar</div>
+<a class='btn' href='https://ada.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='youper' data-cat='Saúde e Bem-estar' data-stars='4' data-text='youper saúde e bem-estar apoio à saúde mental com técnicas tipo cbt.'>
+<div class='top'><h3>Youper</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Apoio à saúde mental com técnicas tipo CBT.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★☆☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Saúde e Bem-estar</div>
+<a class='btn' href='https://www.youper.ai' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='woebot' data-cat='Saúde e Bem-estar' data-stars='4' data-text='woebot saúde e bem-estar suporte emocional baseado em cbt.'>
+<div class='top'><h3>Woebot</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Suporte emocional baseado em CBT.</p>
+<div class='rating'><span class='stars'>★★★★☆</span><b>4/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★☆☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★☆☆</span></div>
+<div class='meta'>Categoria: Saúde e Bem-estar</div>
+<a class='btn' href='https://woebothealth.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article>
+<article class='card' data-name='replika' data-cat='Saúde e Bem-estar' data-stars='3' data-text='replika saúde e bem-estar companheiro virtual de conversa e suporte emocional.'>
+<div class='top'><h3>Replika</h3><span class='badge'>PDF</span></div>
+<p class='desc'>Companheiro virtual de conversa e suporte emocional.</p>
+<div class='rating'><span class='stars'>★★★☆☆</span><b>3/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★☆☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★☆☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★☆</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Saúde e Bem-estar</div>
+<a class='btn' href='https://replika.com' target='_blank' rel='noopener'>Abrir IA</a>
+</article></div></section>
+  </div>
+</div>
+
+<div class="acc">
+  <button class="acc-head" onclick="v6Toggle(this)"><span>Apresentações</span><span class="arrow">▶</span></button>
+  <div class="acc-body">
+<section class='section' data-section='Apresentações'><h2>Apresentações</h2><div class='grid'><article class='card' data-name='gamma' data-cat='Apresentações' data-stars='5' data-text='gamma apresentações muito útil para criar apresentações rápidas a partir de texto.'>
+<div class='top'><h3>Gamma</h3><span class='badge'>Extra</span></div>
+<p class='desc'>Muito útil para criar apresentações rápidas a partir de texto.</p>
+<div class='rating'><span class='stars'>★★★★★</span><b>5/5</b></div>
+<div class='mini'><span tabindex="0" title="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco." data-tip="Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis. Poucas estrelas = grátis mas pouco.">💰 ★★★★☆</span><span tabindex="0" title="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas." data-tip="Inteligência / raciocínio: capacidade para analisar, escrever, explicar, programar ou resolver tarefas complexas.">🧠 ★★★★☆</span><span tabindex="0" title="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia." data-tip="Facilidade e rapidez: quanto mais estrelas, mais simples e prática é para usar no dia a dia.">🚀 ★★★★★</span><span tabindex="0" title="Português: qualidade das respostas, escrita e compreensão em português." data-tip="Português: qualidade das respostas, escrita e compreensão em português.">🇵🇹 ★★★★☆</span></div>
+<div class='meta'>Categoria: Apresentações</div>
+<a class='btn' href='https://gamma.app' target='_blank' rel='noopener'>Abrir IA</a>
+</article></div></section>
+<section class='section' id='customSection' data-section='IAs do Pàjó'>
+<h2>➕ IAs do Pàjó</h2>
+<div class='panel'>
+  <h2>Adicionar / editar IA</h2>
+  <input id='newName' placeholder='Nome da IA'>
+  <div class='addgrid'>
+    <input id='newCat' placeholder='Categoria — exemplo: Assistentes Gerais / Chatbots'>
+    <input id='newLink' placeholder='Link — https://...'>
+    <select id='newStars'><option value='5'>★★★★★ 5/5</option><option value='4'>★★★★☆ 4/5</option><option value='3'>★★★☆☆ 3/5</option><option value='2'>★★☆☆☆ 2/5</option><option value='1'>★☆☆☆☆ 1/5</option><option value='0'>☆☆☆☆☆ 0/5</option></select>
+    <select id='newWallet'><option>💚 Verdadeiramente grátis</option><option>💛 Grátis mas pouco 🤣</option><option>🧡 Vais acabar por pagar</option><option>❤️ A carteira já está a chorar</option><option>💀 Nem experimentes se és forreta</option></select>
+    <textarea id='newDesc' placeholder='Descrição — o que esta IA faz'></textarea>
+    <textarea id='newNote' placeholder='Nota do Pàjó — exemplo: Grátis mas pouco 🤣'></textarea>
+  </div>
+  <div class='managebar'>
+    <button class='smallbtn' id='saveCustom' type='button'>Guardar IA</button>
+    <button class='smallbtn' id='clearCustom' type='button'>Limpar campos</button>
+    <button class='smallbtn' id='exportCustom' type='button'>📤 Exportar JSON</button>
+    <label class='smallbtn'>📥 Importar JSON <input id='importCustom' type='file' accept='application/json' style='display:none'></label>
+  </div>
+  <div id='customMsg'></div>
+</div>
+<div class='grid' id='customGrid'></div>
+</section>
+
+  </div>
+</div>
+<p class='note'>Classificação prática e subjetiva: geral, gratuito, inteligência, facilidade e suporte a português. Algumas ferramentas são freemium: gratuitas, mas com limites.</p><p class='note'>Versão 6.4: adiciona novas IAs pela interface, com notas, estrelas e exportação/importação.</p></main><button class='float' id='dark'>🌙 Modo</button><script>
+const q=document.getElementById('q'), cat=document.getElementById('cat'), stars=document.getElementById('stars');
+const chips=[...document.querySelectorAll('.chip')]; let cards=[...document.querySelectorAll('.card')]; let sections=[...document.querySelectorAll('.section')];
+let active='Todas';
+function apply(){ const query=q.value.toLowerCase().trim(); const min=+stars.value; active=cat.value==='Todas'?active:cat.value; cards.forEach(c=>{ const okText=!query||c.dataset.text.includes(query); const okCat=active==='Todas'||c.dataset.cat===active; const okStars=+c.dataset.stars>=min; c.style.display=(okText&&okCat&&okStars)?'block':'none'; }); sections.forEach(s=>{ const visible=[...s.querySelectorAll('.card')].some(c=>c.style.display!=='none'); s.style.display=visible?'block':'none'; }); chips.forEach(ch=>ch.classList.toggle('active',ch.dataset.cat===active)); }
+q.oninput=apply; stars.onchange=apply; cat.onchange=()=>{active=cat.value; apply()}; chips.forEach(ch=>ch.onclick=()=>{active=ch.dataset.cat; cat.value=active; apply()});
+
+const advice=document.getElementById('advice'), task=document.getElementById('task');
+const recommendations={
+ 'geral':[['ChatGPT','Melhor equilíbrio para uso geral: escrever, aprender, resumir e organizar ideias.'],['Claude','Muito forte para textos longos e raciocínio.'],['Gemini','Boa opção quando queres ligação ao ecossistema Google.']],
+ 'traducao-care':[['DeepL','Melhor escolha direta para tradução PT ↔ EN com qualidade.'],['ChatGPT','Útil para adaptar a tradução ao tom profissional de care notes.'],['LanguageTool','Bom para rever gramática e clareza.']],
+ 'apresentacao':[['Gamma','Cria apresentações rápidas e visualmente limpas.'],['Canva AI','Bom para editar e melhorar o design final.'],['ChatGPT','Bom para criar estrutura, texto e roteiro.']],
+ 'estudar':[['ChatGPT','Explica passo a passo e adapta ao teu nível.'],['NotebookLM','Excelente quando tens PDFs, apontamentos ou documentos próprios.'],['Khanmigo','Bom para apoio educativo estruturado.']],
+ 'pesquisa':[['Perplexity AI','Pesquisa com fontes e respostas citadas.'],['Consensus','Bom para respostas baseadas em estudos científicos.'],['Elicit','Forte para pesquisa académica.']],
+ 'documentos':[['NotebookLM','A melhor opção para trabalhar com documentos e fontes próprias.'],['Claude','Muito forte em documentos longos.'],['ChatGPT','Bom para resumir, explicar e transformar informação em texto útil.']],
+ 'programar':[['Cursor','Excelente editor com IA para programar.'],['Bolt.new','Bom para criar apps web rapidamente no browser.'],['Codeium','Boa alternativa gratuita para ajuda no código.']],
+ 'imagem':[['Leonardo.ai','Muito forte para imagens de alta qualidade.'],['Ideogram','Melhor quando a imagem precisa de texto legível.'],['Krea AI','Boa para controlo visual e melhoria de imagem.']],
+ 'video':[['Runway ML','Forte para edição e geração de vídeo com IA.'],['Luma Dream Machine','Muito boa para vídeo realista.'],['CapCut','Mais simples e prático para edição rápida.']],
+ 'musica':[['Suno AI','Escolha forte para músicas completas com letra.'],['Udio','Muito boa qualidade musical.'],['Mubert','Útil para música ambiente e trilhas.']],
+ 'voz':[['ElevenLabs','Referência para voz sintética e narração.'],['TTSMaker','Boa opção simples e gratuita para texto-para-voz.'],['Adobe Podcast','Melhora áudio e limpa ruído.']],
+ 'design':[['Canva AI','Melhor para design rápido e fácil.'],['Napkin AI','Transforma ideias e texto em esquemas visuais.'],['Remove.bg','Remove fundo de imagens em segundos.']],
+ 'reuniao':[['Otter.ai','Transcreve reuniões automaticamente.'],['Fireflies.ai','Cria notas e resumos de reuniões.'],['Adobe Podcast','Útil para melhorar áudio gravado.']]
+};
+function cardFor(name,why){const el=cards.find(c=>c.querySelector('h3')?.textContent===name); const url=el?el.querySelector('a')?.href:'#'; const rating=el?el.querySelector('.rating')?.innerHTML:''; return `<div class='pick'><b>${name}</b><div>${rating}</div><div class='why'>${why}</div><a href='${url}' target='_blank' rel='noopener'>Abrir</a></div>`}
+function updateAdvice(){const list=recommendations[task.value]||recommendations.geral; advice.innerHTML=list.map(x=>cardFor(x[0],x[1])).join('')}
+task.onchange=updateAdvice; updateAdvice();
+
+document.getElementById('dark').onclick=()=>document.body.classList.toggle('dark');
+
+// Favoritos, equipas e comparador - v4
+const favKey='ai_app_favorites_v4';
+function getFavs(){try{return JSON.parse(localStorage.getItem(favKey)||'[]')}catch(e){return []}}
+function setFavs(v){localStorage.setItem(favKey,JSON.stringify(v))}
+function aiInfo(){return cards.map(c=>({name:c.querySelector('h3').textContent,cat:c.dataset.cat,stars:c.dataset.stars,href:c.querySelector('a')?.href||'#',rating:c.querySelector('.rating')?.innerText.trim()||'',desc:c.querySelector('.desc')?.innerText||''}))}
+function addFavButtons(){cards.forEach(c=>{if(c.querySelector('.favbtn'))return; const name=c.querySelector('h3').textContent; const b=document.createElement('button'); b.className='favbtn'; b.type='button'; b.textContent=getFavs().includes(name)?'❤️ Favorito':'🤍 Adicionar aos favoritos'; b.onclick=()=>{let f=getFavs(); if(f.includes(name)){f=f.filter(x=>x!==name)}else{f.push(name)} setFavs(f); refreshFavs();}; c.querySelector('.btn').before(b);});}
+function refreshFavs(){const f=getFavs(); document.querySelectorAll('.favbtn').forEach(b=>{const name=b.closest('.card').querySelector('h3').textContent; const on=f.includes(name); b.classList.toggle('on',on); b.textContent=on?'❤️ Favorito':'🤍 Adicionar aos favoritos'}); const out=document.getElementById('favout'); if(!out)return; const infos=aiInfo().filter(x=>f.includes(x.name)); out.innerHTML=infos.length?infos.map(x=>`<div class='favitem'><div><b>${x.name}</b><br><span class='tiny'>${x.cat} · ${x.rating}</span></div><a href='${x.href}' target='_blank' rel='noopener'>Abrir</a></div>`).join(''):'<span class="tiny">Ainda não adicionaste favoritos.</span>';}
+const teamData={
+ care:[['ChatGPT','Care notes, emails, explicações'],['DeepL','Tradução PT ↔ EN'],['Claude','Políticas e documentos longos'],['Gamma','Apresentações/formação'],['Consensus','Trabalhos académicos']],
+ study:[['ChatGPT','Explicar e estruturar trabalhos'],['Elicit','Encontrar papers'],['Consensus','Síntese científica'],['SciSpace','Explicar papers'],['Gamma','Apresentações']],
+ code:[['Cursor','Editor de código com IA'],['ChatGPT','Arquitetura e debugging'],['Claude','Código e raciocínio longo'],['Bolt.new','Apps rápidas no browser'],['GitHub Copilot','Autocomplete']],
+ content:[['ChatGPT','Ideias e guiões'],['Canva AI','Design'],['Leonardo.ai','Imagens'],['ElevenLabs','Voz'],['CapCut','Vídeo']],
+ personal:[['ChatGPT','Uso geral'],['Gemini','Google/Android'],['Perplexity AI','Pesquisa com fontes'],['DeepL','Tradução'],['NotebookLM','Documentos pessoais']]
+};
+function renderTeam(){const val=document.getElementById('team')?.value||'care'; const out=document.getElementById('teamout'); if(!out)return; out.innerHTML=teamData[val].map((x,i)=>`<div class='teamitem'><b>${i+1}. ${x[0]}</b><small>${x[1]}</small></div>`).join('')}
+function setupCompare(){const s1=document.getElementById('cmp1'),s2=document.getElementById('cmp2'); if(!s1||!s2)return; const names=[...new Set(aiInfo().map(x=>x.name))].sort(); s1.innerHTML=names.map(n=>`<option>${n}</option>`).join(''); s2.innerHTML=names.map(n=>`<option>${n}</option>`).join(''); s1.value='ChatGPT'; s2.value='Claude'; s1.onchange=s2.onchange=renderCompare; renderCompare();}
+function renderCompare(){const infos=aiInfo(); const out=document.getElementById('cmpout'); if(!out)return; const vals=[document.getElementById('cmp1').value,document.getElementById('cmp2').value]; out.innerHTML=vals.map(v=>{const x=infos.find(i=>i.name===v)||infos[0];return `<div class='cmpcell'><h3>${x.name}</h3><b>${x.rating}</b><p class='tiny'>${x.cat}</p><p>${x.desc}</p><a class='btn' href='${x.href}' target='_blank' rel='noopener'>Abrir</a></div>`}).join('')}
+
+// IAs personalizadas - v5 em cima da v4
+const customKey='ai_app_custom_v5';
+let editingIndex=null;
+function getCustom(){try{return JSON.parse(localStorage.getItem(customKey)||'[]')}catch(e){return []}}
+function setCustom(v){localStorage.setItem(customKey,JSON.stringify(v))}
+function starText(n){n=+n||0;return '★'.repeat(n)+'☆'.repeat(5-n)}
+function msg(t){const m=document.getElementById('customMsg'); if(m){m.innerHTML=`<div class='okmsg'>${t}</div>`; setTimeout(()=>m.innerHTML='',2200)}}
+function clearCustomForm(){editingIndex=null; ['newName','newCat','newLink','newDesc','newNote'].forEach(id=>{const e=document.getElementById(id); if(e)e.value=''}); const s=document.getElementById('newStars'); if(s)s.value='5'; const w=document.getElementById('newWallet'); if(w)w.value='💚 Verdadeiramente grátis'}
+function renderCustom(){const grid=document.getElementById('customGrid'); if(!grid)return; const arr=getCustom(); grid.innerHTML=arr.map((x,i)=>`<article class='card custom-card' data-name='${(x.name||'').toLowerCase()}' data-cat='${x.cat||'IAs do Pàjó'}' data-stars='${x.stars||0}' data-text='${((x.name||'')+' '+(x.cat||'')+' '+(x.desc||'')+' '+(x.note||'')).toLowerCase().replace(/'/g,'')}'><div class='top'><h3>${x.name||'Sem nome'}</h3><span class='badge'>Pàjó</span></div><p class='desc'>${x.desc||''}</p><div class='rating'><span class='stars'>${starText(x.stars)}</span><b>${x.stars||0}/5</b></div><div class='wallet'>${x.wallet||''}</div><div class='mini'><span>📝 Nota do Pàjó: ${x.note||'Sem nota.'}</span></div><div class='meta'>Categoria: ${x.cat||'IAs do Pàjó'}</div><a class='btn' href='${x.link||'#'}' target='_blank' rel='noopener'>Abrir IA</a><div class='custom-actions'><button class='smallbtn' type='button' onclick='editCustom(${i})'>Editar</button><button class='smallbtn danger' type='button' onclick='deleteCustom(${i})'>Apagar</button></div></article>`).join(''); cards=[...document.querySelectorAll('.card')]; sections=[...document.querySelectorAll('.section')]; addFavButtons(); refreshFavs(); setupCompare(); apply();}
+function saveCustomAI(){const x={name:document.getElementById('newName')?.value.trim(),cat:document.getElementById('newCat')?.value.trim()||'IAs do Pàjó',link:document.getElementById('newLink')?.value.trim()||'#',stars:document.getElementById('newStars')?.value||'5',wallet:document.getElementById('newWallet')?.value||'',desc:document.getElementById('newDesc')?.value.trim(),note:document.getElementById('newNote')?.value.trim()}; if(!x.name){msg('Falta o nome da IA.');return} let arr=getCustom(); if(editingIndex===null){arr.push(x);msg('IA adicionada.')}else{arr[editingIndex]=x;msg('IA atualizada.')} setCustom(arr); clearCustomForm(); renderCustom();}
+function editCustom(i){const x=getCustom()[i]; if(!x)return; editingIndex=i; document.getElementById('newName').value=x.name||''; document.getElementById('newCat').value=x.cat||''; document.getElementById('newLink').value=x.link||''; document.getElementById('newStars').value=x.stars||'5'; document.getElementById('newWallet').value=x.wallet||'💚 Verdadeiramente grátis'; document.getElementById('newDesc').value=x.desc||''; document.getElementById('newNote').value=x.note||''; document.getElementById('customSection')?.scrollIntoView({behavior:'smooth'});}
+function deleteCustom(i){let arr=getCustom(); arr.splice(i,1); setCustom(arr); renderCustom(); msg('IA apagada.');}
+function exportCustomData(){const blob=new Blob([JSON.stringify(getCustom(),null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='ias_do_pajo_backup.json'; a.click();}
+function importCustomData(file){if(!file)return; const r=new FileReader(); r.onload=e=>{try{const incoming=JSON.parse(e.target.result); if(!Array.isArray(incoming))throw new Error('JSON inválido'); setCustom(incoming); renderCustom(); msg('Importação concluída.')}catch(err){msg('Ficheiro inválido.')}}; r.readAsText(file);}
+document.getElementById('saveCustom')?.addEventListener('click',saveCustomAI);
+document.getElementById('clearCustom')?.addEventListener('click',clearCustomForm);
+document.getElementById('exportCustom')?.addEventListener('click',exportCustomData);
+document.getElementById('importCustom')?.addEventListener('change',e=>importCustomData(e.target.files[0]));
+
+document.getElementById('team')?.addEventListener('change',renderTeam);
+renderCustom(); addFavButtons(); refreshFavs(); renderTeam(); setupCompare();
+
+apply();
+
+
+function v6Toggle(btn){btn.closest('.acc').classList.toggle('open');}
+function v6ExpandAll(){document.querySelectorAll('.acc').forEach(x=>x.classList.add('open'));}
+function v6CollapseAll(){document.querySelectorAll('.acc').forEach(x=>x.classList.remove('open'));}
+document.addEventListener('DOMContentLoaded', ()=>{
+ const q=document.getElementById('q');
+ if(q){q.addEventListener('input',()=>{
+   const val=q.value.trim().toLowerCase();
+   if(val.length>0){
+     document.querySelectorAll('.acc').forEach(acc=>{
+       if(acc.innerText.toLowerCase().includes(val)) acc.classList.add('open');
+     });
+   }
+ });}
+});
+
+
+
+function v62Normalize(s){
+  return (s||'').toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/\s+/g,' ').trim();
+}
+function v62OpenCategory(cat){
+  if(!cat || cat === 'Todas'){
+    document.querySelectorAll('.acc').forEach(x=>x.classList.add('open'));
+    window.scrollTo({top:0,behavior:'smooth'});
+    return;
+  }
+  const target = v62Normalize(cat);
+  let found = null;
+  document.querySelectorAll('.acc').forEach(acc=>{
+    const head = acc.querySelector('.acc-head span');
+    const title = v62Normalize(head ? head.textContent : '');
+    if(title.includes(target)){
+      acc.classList.add('open');
+      found = acc;
+    } else {
+      // Fecha só as categorias; mantém favoritos/top conforme estavam
+      const isCategory = acc.querySelector("section.section");
+      if(isCategory) acc.classList.remove('open');
+    }
+  });
+  if(found){
+    found.scrollIntoView({behavior:'smooth',block:'start'});
+    found.classList.add('jump-highlight');
+    setTimeout(()=>found.classList.remove('jump-highlight'),1200);
+  }
+}
+document.addEventListener('DOMContentLoaded', ()=>{
+  document.querySelectorAll('.chip[data-cat]').forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+      chip.classList.add('active');
+      const cat = chip.getAttribute('data-cat');
+      const sel = document.getElementById('cat');
+      if(sel) sel.value = cat;
+      v62OpenCategory(cat);
+    });
+  });
+  const catSel=document.getElementById('cat');
+  if(catSel){
+    catSel.addEventListener('change', ()=>{
+      document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('active', c.getAttribute('data-cat')===catSel.value));
+      v62OpenCategory(catSel.value);
+    });
+  }
+});
+
+
+
+function v63SmartFavorites(){
+  const favAcc = Array.from(document.querySelectorAll('.acc')).find(acc=>{
+    const head = acc.querySelector('.acc-head span');
+    return head && head.textContent.includes('Os meus favoritos');
+  });
+  if(!favAcc) return;
+  const favOut = document.getElementById('favout');
+  const hasFavs = favOut && favOut.innerText.trim() && !favOut.innerText.toLowerCase().includes('ainda não adicionaste favoritos');
+  if(hasFavs){
+    favAcc.classList.add('open');
+    favAcc.classList.remove('fav-empty');
+  }else{
+    favAcc.classList.remove('open');
+    favAcc.classList.add('fav-empty');
+  }
+}
+document.addEventListener('DOMContentLoaded', ()=>{
+  setTimeout(v63SmartFavorites, 150);
+  document.addEventListener('click', ()=>setTimeout(v63SmartFavorites, 150));
+});
+
+
+
+function customStars(n){
+  n = Number(n || 0);
+  return "★★★★★☆☆☆☆☆".slice(5-n,10-n);
+}
+function customTipSpan(icon, value, tip){
+  return `<span tabindex="0" title="${tip}" data-tip="${tip}">${icon} ${customStars(value)}</span>`;
+}
+function getCustomAIs(){
+  try{return JSON.parse(localStorage.getItem("custom_ai_list") || "[]");}
+  catch(e){return [];}
+}
+function saveCustomAIs(list){
+  localStorage.setItem("custom_ai_list", JSON.stringify(list));
+}
+function clearCustomAIForm(){
+  ["newName","newLink","newDesc","newNote"].forEach(id=>{const el=document.getElementById(id); if(el) el.value="";});
+  ["newStars","newMoney","newBrain","newEase","newPT"].forEach(id=>{const el=document.getElementById(id); if(el) el.value="5";});
+}
+function addCustomAI(){
+  const item = {
+    id: Date.now(),
+    name: document.getElementById("newName").value.trim(),
+    cat: document.getElementById("newCat").value,
+    link: document.getElementById("newLink").value.trim(),
+    desc: document.getElementById("newDesc").value.trim(),
+    stars: Number(document.getElementById("newStars").value),
+    money: Number(document.getElementById("newMoney").value),
+    brain: Number(document.getElementById("newBrain").value),
+    ease: Number(document.getElementById("newEase").value),
+    pt: Number(document.getElementById("newPT").value),
+    note: document.getElementById("newNote").value.trim()
+  };
+  if(!item.name || !item.link || !item.desc){
+    alert("Falta nome, link ou descrição.");
+    return;
+  }
+  if(!item.link.startsWith("http://") && !item.link.startsWith("https://")){
+    item.link = "https://" + item.link;
+  }
+  const list = getCustomAIs();
+  list.push(item);
+  saveCustomAIs(list);
+  clearCustomAIForm();
+  renderCustomAIs();
+  v62OpenCategory(item.cat);
+}
+function deleteCustomAI(id){
+  if(!confirm("Apagar esta IA adicionada?")) return;
+  saveCustomAIs(getCustomAIs().filter(x=>x.id !== id));
+  renderCustomAIs();
+}
+function renderCustomAIs(){
+  document.querySelectorAll(".custom-ai-card").forEach(x=>x.remove());
+  const list = getCustomAIs();
+  list.forEach(x=>{
+    const sections = Array.from(document.querySelectorAll("section.section"));
+    const sec = sections.find(s => (s.getAttribute("data-section") || "") === x.cat);
+    if(!sec) return;
+    const grid = sec.querySelector(".grid");
+    if(!grid) return;
+    const article = document.createElement("article");
+    article.className = "card custom-ai-card";
+    article.setAttribute("data-name", x.name.toLowerCase());
+    article.setAttribute("data-cat", x.cat);
+    article.setAttribute("data-stars", String(x.stars));
+    article.setAttribute("data-text", `${x.name} ${x.cat} ${x.desc} ${x.note}`.toLowerCase());
+    article.innerHTML = `
+      <div class="top"><h3>${x.name}</h3><span class="badge custom-tag">Nova</span></div>
+      <p class="desc">${x.desc}</p>
+      <div class="rating"><span class="stars">${customStars(x.stars)}</span><b>${x.stars}/5</b></div>
+      <div class="mini">
+        ${customTipSpan("💰",x.money,"Preço / plano gratuito: quanto mais estrelas, melhor é a oferta grátis.")}
+        ${customTipSpan("🧠",x.brain,"Inteligência / raciocínio: capacidade para analisar, escrever, explicar ou resolver tarefas.")}
+        ${customTipSpan("🚀",x.ease,"Facilidade e rapidez: simples e prática para usar no dia a dia.")}
+        ${customTipSpan("🇵🇹",x.pt,"Português: qualidade das respostas, escrita e compreensão em português.")}
+      </div>
+      ${x.note ? `<p class="meta"><b>Nota do Pàjó:</b> ${x.note}</p>` : ""}
+      <div class="meta">Categoria: ${x.cat}</div>
+      <button class="favbtn" onclick="toggleFav('${x.name.replace(/'/g,"\\'")}')">♡ Adicionar aos favoritos</button>
+      <button class="delete-custom" onclick="deleteCustomAI(${x.id})">Apagar IA adicionada</button>
+      <a class="btn" href="${x.link}" target="_blank" rel="noopener">Abrir IA</a>
+    `;
+    grid.prepend(article);
+  });
+  if(typeof renderFavs === "function") renderFavs();
+  if(typeof applyFilters === "function") applyFilters();
+}
+function exportCustomAIs(){
+  const blob = new Blob([JSON.stringify(getCustomAIs(), null, 2)], {type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "ias_adicionadas_enciclopedia.json";
+  a.click();
+}
+function importCustomAIs(event){
+  const file = event.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e=>{
+    try{
+      const imported = JSON.parse(e.target.result);
+      if(!Array.isArray(imported)) throw new Error("Formato inválido");
+      const current = getCustomAIs();
+      saveCustomAIs(current.concat(imported.map(x=>({...x,id:Date.now()+Math.floor(Math.random()*99999)}))));
+      renderCustomAIs();
+      alert("Importado.");
+    }catch(err){alert("Não consegui importar o ficheiro JSON.");}
+  };
+  reader.readAsText(file);
+}
+document.addEventListener("DOMContentLoaded", ()=>setTimeout(renderCustomAIs, 200));
+
+</script></body></html>
